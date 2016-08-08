@@ -1,0 +1,65 @@
+{% extends base_template_path %}
+
+{% block hero %}{% endblock %}
+{% block content %}
+<div class="row {% if show_sidebar %}vert-line{% endif %} page-layout-{{ theme_page_layout }}">
+	
+	{% if theme_page_layout == "two-left" or theme_page_layout == "three" %}
+		<div class="col-sm-3 sidebar-block hidden-xs page-column-left">
+			{% block page_column_left_top %}{% endblock %}
+			{% if theme_column_left_includes is defined %}
+				{% for include_path in theme_column_left_includes %}
+					{% include include_path %}
+				{% endfor %}
+			{% endif %}
+			{% block page_column_left %}{% endblock %}
+		</div>
+	{% endif %}
+	{% set main_column_sizes = { "one": 12, "two-left": 9, "two-right": 9, "three": 6 } %}
+	<div class="page-column-main page-content col-sm-{{ main_column_sizes[theme_page_layout] }}">
+		<div class="page-content-wrapper">
+			<div class="row page-head">
+				<div class="col-sm-8 col-xs-6">
+					{% if not no_breadcrumbs and parents %}
+					<div class="page-breadcrumbs">
+						{% block breadcrumbs %}
+						{% include 'templates/includes/breadcrumbs.html' %}
+						{% endblock %}
+					</div>
+					{% endif %}
+					{% block header %}{% endblock %}
+				</div>
+				<div class="col-sm-4 col-xs-6">
+					{% if show_search %}
+						<div class="page-search-block">
+						{% block search %}
+							{% include 'templates/includes/search_box.html' %}
+						{% endblock %}
+						</div>
+					{% endif %}
+
+					{% if self.header_actions() %}
+					<div class="page-header-actions-block">
+						{% block header_actions %}{% endblock %}
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="page_content">
+			{%- block page_content -%}{%- endblock -%}
+		</div>
+	</div>
+	{% if theme_page_layout == "two-right" or theme_page_layout == "three" %}
+		<div class="col-sm-3 sidebar-block hidden-xs page-column-right">
+			{% block page_column_right_top %}{% endblock %}
+			{% if theme_column_right_includes is defined %}
+				{% for include_path in theme_column_right_includes %}
+					{% include include_path %}
+				{% endfor %}
+			{% endif %}
+			{% block page_column_right %}{% endblock %}
+		</div>
+	{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!-- Built on Frappe. https://frappe.io/ -->
+<html lang="en">
+<head>
+	{% set theme_banner_flow = theme_banner_flow | default("container-fluid") %}
+	{% set theme_page_flow = theme_page_flow | default("container-fluid") %}
+	{% set theme_page_layout = theme_columns | default("two-right") %}
+	{% set theme_column_left_includes = [ "templates/includes/web_sidebar.html" ] %}
+	{% set theme_column_right_includes = [ "templates/includes/web_sidebar.html" ] %}
+	{% if show_sidebar and theme_page_layout == "one" %}
+		{% set theme_page_layout = "two-left" %}
+	{% endif %}
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %} {{ title | striptags }} {% endblock %}</title>
+	<meta name="generator" content="frappe">
+
+	{% block favicon %}
+		<link rel="shortcut icon"
+			href="{{ (favicon or "/assets/frappe/images/favicon.png") | abs_url }}"
+			type="image/x-icon">
+		<link rel="icon"
+			href="{{ (favicon or "/assets/frappe/images/favicon.png") | abs_url }}"
+			type="image/x-icon">
+	{% endblock %}
+
+	{%- block head -%}
+		{% if meta_block is defined -%}
+			{{ meta_block }}
+		{%- endif %}
+
+		{% if head_html is defined -%}
+			{{ head_html or "" }}
+		{%- endif %}
+
+		{%- for link in web_include_css %}
+			<link type="text/css" rel="stylesheet" href="{{ link|abs_url }}">
+		{%- endfor -%}
+
+	    {%- block head_include %}{{ head_include or "" }}{% endblock -%}
+
+		{%- block style %}{%- endblock -%}
+	{%- endblock -%}
+
+	<script>
+		window.frappe = {
+		page_ready_events: {},
+			ready: function(fn) {
+				if (!frappe.page_ready_events[location.pathname]) {
+					frappe.page_ready_events[location.pathname] = []
+				}
+				frappe.page_ready_events[location.pathname].push(fn);
+			}
+		}
+	window.dev_server = {{ dev_server }};
+	</script>
+</head>
+<body data-path="{{ path }}">
+	{%- block banner scoped -%}
+		{% include "templates/includes/banner_extension.html" ignore missing %}
+		{% if banner_html -%}
+			<header class="{{ theme_banner_flow }}">{{ banner_html or "" }}</header>
+		{%- endif %}
+	{%- endblock -%}
+	<!-- Navigation -->
+	{%- block navbar -%}
+		{% include "templates/includes/navbar/navbar.html" %}
+	{%- endblock -%}
+
+	{% block main_section %}
+	<div class="main-section">
+		<div>
+
+			<div class="hero-and-content">
+				<div data-html-block="hero">
+					{%- block hero -%}{%- endblock -%}
+				</div>
+				<div class="{{ theme_page_flow }}" id="page-{{ name or route }}"
+					data-path="{{ pathname }}" 
+					data-html-block="content" {% if page_or_generator=="Generator" %}
+					data-doctype="{{ doctype }}"{% endif %}>
+					
+					{% block content %}{% endblock %}
+				</div>
+			</div>
+			{%- if footer is defined -%}
+			<footer class="page-footer">
+				<div class="{{ theme_page_flow }}">
+					{{ footer }}
+				</div>
+			</footer>
+			{%- endif -%}
+		</div>
+	</div>
+	{% endblock main_section %}
+
+	{%- block footer -%}{% include "templates/includes/footer/footer.html" %}{%- endblock -%}
+
+	<!-- js should be loaded in body! -->
+	<script type="text/javascript"
+		src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="/assets/js/frappe-web.min.js"></script>
+
+{%- if js_globals is defined %}
+	<script>
+	{%- for key, value in js_globals.iteritems() %}
+		window.{{ key }} = "{{ value[0] }}";
+	{%- endfor -%}
+	</script>
+{% endif -%}
+
+{%- for link in web_include_js %}
+	<script type="text/javascript" src="{{ link|abs_url }}"></script>
+{%- endfor -%}
+
+	{%- block script %}{%- endblock %}
+
+	<!-- csrf_token -->
+
+	{%- block body_include %}{{ body_include or "" }}{% endblock -%}
+</body>
+</html>

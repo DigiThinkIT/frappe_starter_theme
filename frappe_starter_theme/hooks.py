@@ -11,17 +11,23 @@ app_color = "grey"
 app_email = "forellana@digithinkit.com"
 app_license = "MIT"
 
+
+fixtures = ["Custom Field"]
+
 # Includes in <head>
 # ------------------
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/frappe_starter_theme/css/frappe_starter_theme.css"
 # app_include_js = "/assets/frappe_starter_theme/js/frappe_starter_theme.js"
+#app_include_js = "/assets/frappe_starter_theme/js/app_custom.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/frappe_starter_theme/css/frappe_starter_theme.css"
 # web_include_js = "/assets/frappe_starter_theme/js/frappe_starter_theme.js"
 
+web_include_css = "/starter_theme.css"
+update_website_context = "frappe_starter_theme.starter.get_starter_theme_context"
 # Home Pages
 # ----------
 

@@ -20,6 +20,7 @@
 		<div class="page-content-wrapper">
 			<div class="row page-head">
 				<div class="col-sm-8 col-xs-6">
+				{% block page_head_left %}
 					{% if not no_breadcrumbs and parents %}
 					<div class="page-breadcrumbs">
 						{% block breadcrumbs %}
@@ -28,6 +29,7 @@
 					</div>
 					{% endif %}
 					{% block header %}{% endblock %}
+				{% endblock %}
 				</div>
 				<div class="col-sm-4 col-xs-6">
 					{% if show_search %}

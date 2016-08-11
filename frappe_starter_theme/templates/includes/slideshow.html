@@ -1,0 +1,47 @@
+{% if slideshow %}
+{{ slideshow_header }}
+
+
+<div id="the-carousel" class="carousel slide">
+	<!-- Indicators -->
+	<ol class="carousel-indicators">
+		{% for slide in slides %}
+			<li data-target="#the-carousel" data-slide-to="{{ slide.idx - 1 }}"
+				{%- if slide.idx==1 %}class="active"{% endif %}></li>
+		{% endfor %}
+	</ol>
+
+	<!-- Wrapper for slides -->
+	<div class="carousel-inner">
+		{% for slide in slides %}
+		<div class="{% if slide.idx==1 %}active {% endif %}item">
+			{% if theme_fullscreen_slider and theme_slider_placement == 'navbar_under' %}
+			<div class="slider-image" style="background-image: url('{{ slide.image }}');"></div>
+			{% else %}
+			<img src="{{ slide.image }}" class="slide-image" />
+			{% endif %}
+			{% if slide.heading or slide.description %}
+			<div class="carousel-caption">
+				{% if slide.heading %}<h4>{{ slide.heading }}</h4>{% endif %}
+				{% if slide.description %}<p>{{ slide.description }}</p>{% endif %}
+			</div>
+			{% endif %}
+		</div>
+		{% endfor %}
+	</div>
+
+	<!-- Controls -->
+	<a class="left carousel-control" href="#the-carousel" data-slide="prev">
+		<span class="icon icon-chevron-left"></span>
+	</a>
+	<a class="right carousel-control" href="#the-carousel" data-slide="next">
+		<span class="icon icon-chevron-right"></span>
+	</a>
+</div>
+
+<script>
+frappe.ready(function() {
+	$(".carousel").carousel();
+});
+</script>
+{% endif %}

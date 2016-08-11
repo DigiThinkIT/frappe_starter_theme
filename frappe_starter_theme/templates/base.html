@@ -1,15 +1,98 @@
 <!DOCTYPE html>
-<!-- Built on Frappe. https://frappe.io/ -->
+<!-- Built by DigiThinkIT, Inc. https://digithinkit.com/ for Frappe https://frappe.io/ -->
 <html lang="en">
 <head>
-	{% set theme_banner_flow = theme_banner_flow | default("container-fluid") %}
-	{% set theme_page_flow = theme_page_flow | default("container-fluid") %}
-	{% set theme_page_layout = theme_columns | default("two-right") %}
-	{% set theme_column_left_includes = [ "templates/includes/web_sidebar.html" ] %}
-	{% set theme_column_right_includes = [ "templates/includes/web_sidebar.html" ] %}
-	{% if show_sidebar and theme_page_layout == "one" %}
-		{% set theme_page_layout = "two-left" %}
+	{# THEME DOCUMENTATION
+
+	# BANNER CONTROLS ######################
+
+	@var string theme_sideshow_placement options
+
+	Controls the placement of the banner. Options are:
+	 	navbar_under: place slideshow outside of page content under navbar
+		page_content: place slideshow inside page content at the top
+
+
+	# PAGE FLOW CONTROLS ##################
+
+	All flow controls work the same way. They are driven with the bootstrap
+	container or container-flow classes to change width contraints
+	
+	Use one of the bootstrap container classes contraint or auto size on
+	any of the flow variables:
+
+		container: Fixed width container with mobile support
+		container-flow: Variable width container
+
+	Variables:
+
+	@var theme_page_flow		- Controls page content flow
+	@var theme_banner_flow		- Controls banner content flow
+	@var theme_navbar_flow		- Controls navbar content flow
+	@var theme_navbar_under_flow	- Controls content flow under navbar
+
+	@ LAYOUT CONTROLS ####################
+
+	To control content column layout you can set theme_page_layout to the following values:
+
+		one		- One column layout only main content
+		two-left	- Two column layout with left sidebar
+		two-right	- Two column layout with right sidebar
+		three		- Three column layout with left and right sidebar
+
+	When the builtin show_sidebar flag is available the template will add it to the left or
+	right columns if available, defaulting to the left column if only one or three columns are
+	enabled.
+
+	To control the default placement of the sidebar when three columns are available set
+	the theme_default_sidebar_layout to either "two-left" or "two-right". This will also
+	force that column to appear when a sidebar is required but only one column layout is
+	being used globabaly.
+
+	You can turn off the automatic placement of the sidebar by setting theme_auto_sidebar_placement
+	to false. You then must render the sidebar yourself by overriding the appropriate block.
+	
+	#}
+
+	{% set theme_fullscreen_slider = theme_fullscreen_slider | default(false) %}
+	{% set theme_slider_placement = theme_slider_placement | default("navbar_under") %}
+
+	{% set theme_banner_flow = theme_banner_flow | default("container") %}
+	{% set theme_page_flow = theme_page_flow | default("container") %}
+	{% set theme_navbar_flow = theme_navbar_flow | default("container") %}
+	{% set theme_navbar_under_flow = theme_navbar_under_flow | default("container") %}
+
+	{% set theme_page_layout = theme_page_layout | default("one") %}
+	{% set theme_default_sidebar_layout = theme_default_sidebar_layout | default("two-left") %}
+	{% set theme_auto_sidebar_placement = theme_auto_sidebar_placement | default(true) %}
+	{% set theme_navbar_fixed_top = theme_navbar_fixed_top | default(false) %}
+	
+	{% set theme_navbar_classes = theme_navbar_classes | default("") %}
+
+	{% if theme_navbar_fixed_top %}
+		{% set theme_navbar_classes = theme_navbar_classes + " navbar-fixed-top" %}
 	{% endif %}
+
+	{# automatically place frappe account sidebar depending on which column is available and placement preference #}
+	{% if show_sidebar and theme_auto_sidebar_placement %}
+		{% if theme_page_layout == "one" %}
+			{% set theme_page_layout = theme_default_sidebar_layout %}
+		{% endif %}
+		{% if theme_page_layout == "two-left"%}
+			{% set theme_column_left_includes = [ "templates/includes/web_sidebar.html" ] + theme_column_left_includes|default([]) %}
+		{% elif theme_page_layout == "two-right" %}
+			{% set theme_column_right_includes = [ "templates/includes/web_sidebar.html" ] + theme_column_right_includes|default([]) %}
+		{% elif theme_page_layout == "three" %}
+			{% if theme_default_sidebar_layout == "two-left" %}
+				{% set theme_column_left_includes = [ "templates/includes/web_sidebar.html" ] + theme_column_left_includes|default([]) %}
+			{% elif theme_default_sidebar_layout == "two-right" %}
+				{% set theme_column_right_includes = [ "templates/includes/web_sidebar.html" ] + theme_column_right_includes|default([]) %}
+			{% endif %}
+		{% endif %}
+	{% endif %}
+
+	{% set theme_column_left_includes = theme_column_left_includes|default([]) %}
+	{% set theme_column_right_includes = theme_column_right_includes|default([]) %}
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,25 +136,32 @@
 				frappe.page_ready_events[location.pathname].push(fn);
 			}
 		}
-	window.dev_server = {{ dev_server }};
+		window.dev_server = {{ dev_server }};
 	</script>
 </head>
-<body data-path="{{ path }}">
-	{%- block banner scoped -%}
+<body data-path="{{ path }}" class="{% if theme_navbar_fixed_top %}has-navbar-fixed-top{% endif %}{% if slideshow and slides|length > 0 %} has-slides{% if theme_slider_placement == 'navbar_under' %} has-slides-navbar-under{% endif %}{% endif %}">
+<div id="body-wrap">
+	{% block banner scoped %}
 		{% include "templates/includes/banner_extension.html" ignore missing %}
 		{% if banner_html -%}
-			<header class="{{ theme_banner_flow }}">{{ banner_html or "" }}</header>
+			<header><div class="{{ theme_banner_flow }}">{{ banner_html or "" }}</div></header>
 		{%- endif %}
-	{%- endblock -%}
+	{% endblock %}
 	<!-- Navigation -->
-	{%- block navbar -%}
+	{% block navbar scoped %}
 		{% include "templates/includes/navbar/navbar.html" %}
-	{%- endblock -%}
+	{% endblock %}
+
+	{% block navbar_under scoped %}
+	<div class="navbar-under {{ theme_navbar_under_flow }} {% if slideshow and slides|length > 0 %}has-slides{% endif %}">
+		{% if theme_slider_placement == 'navbar_under' %}
+			{% include "templates/includes/slideshow.html" %}
+		{% endif %}
+	</div>
+	{% endblock %}
 
 	{% block main_section %}
 	<div class="main-section">
-		<div>
-
 			<div class="hero-and-content">
 				<div data-html-block="hero">
 					{%- block hero -%}{%- endblock -%}
@@ -91,11 +181,12 @@
 				</div>
 			</footer>
 			{%- endif -%}
-		</div>
 	</div>
 	{% endblock main_section %}
+	<div id="body-push"></div>
+</div>
 
-	{%- block footer -%}{% include "templates/includes/footer/footer.html" %}{%- endblock -%}
+	{%- block footer scoped -%}{% include "templates/includes/footer/footer.html" %}{%- endblock -%}
 
 	<!-- js should be loaded in body! -->
 	<script type="text/javascript"
@@ -116,6 +207,15 @@
 {%- endfor -%}
 
 	{%- block script %}{%- endblock %}
+        <script>
+		$(window).scroll(function() {
+		  if ($(document).scrollTop() > 50) {
+		    $('nav').addClass('shrink');
+		  } else {
+		    $('nav').removeClass('shrink');
+		  }
+		});
+	</script>
 
 	<!-- csrf_token -->
 

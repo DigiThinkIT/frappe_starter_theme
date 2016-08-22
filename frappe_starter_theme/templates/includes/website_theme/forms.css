@@ -1,0 +1,24 @@
+.btn-primary {
+	background-color: {{ theme_form_btn_primary_color | default("inherit") }};
+	border: {{ theme_form_btn_primary_border | default("inherit") }};
+	color: {{ theme_form_btn_primary_text_color | default("inherit") }};
+}
+
+.btn-primary:hover {
+	background-color: {{ theme_form_btn_primary_color_hover | default("inherit") }};
+	border: {{ theme_form_btn_primary_border_hover | default("inherit") }};
+	color: {{ theme_form_btn_primary_text_color_hover | default("inherit") }};
+}
+
+.input-group-btn button.btn-default {
+	background-color: {{ theme_form_btn_default_color | default("transparent") }};
+	border: {{ theme_form_btn_default_border | default("1px solid #d1d8dd") }};
+	color: {{ theme_form_btn_default_text_color | default("inherit") }};
+}
+
+.input-group-btn button.btn-default:hover {
+	background-color: {{ theme_form_btn_default_color_hover | default("transparent") }};
+	border: {{ theme_form_btn_default_border_hover | default("1px solid #d1d8dd") }};
+	color: {{ theme_form_btn_default_text_color_hover | default("inherit") }};
+}
+

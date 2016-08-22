@@ -67,11 +67,24 @@
 	{% set theme_default_sidebar_layout = theme_default_sidebar_layout | default("two-left") %}
 	{% set theme_auto_sidebar_placement = theme_auto_sidebar_placement | default(true) %}
 	{% set theme_navbar_fixed_top = theme_navbar_fixed_top | default(false) %}
+	{% set theme_navbar_inlined = theme_navbar_inlined | default(false) %}
+	{% set theme_navbar_type = theme_navbar_type | default("Frappe") %}
+	{% set theme_navbar_location = theme_navbar_location | default("navbar-loc-left") %}
+
+	{% set theme_navbar_open_on_hover = theme_navbar_open_on_hover | default(1) %}
+
+	{% set slideshow_delay_interval = slideshow_delay_interval | default(10000) %}
+
+	{% set theme_navbar_type_ref = { "Frappe": "", "Standard": "_std" } %}
 	
 	{% set theme_navbar_classes = theme_navbar_classes | default("") %}
 
 	{% if theme_navbar_fixed_top %}
 		{% set theme_navbar_classes = theme_navbar_classes + " navbar-fixed-top" %}
+	{% endif %}
+
+	{% if theme_navbar_inlined %}
+		{% set theme_navbar_classes = theme_navbar_classes + " navbar-inlined-brand" %}
 	{% endif %}
 
 	{# automatically place frappe account sidebar depending on which column is available and placement preference #}
@@ -119,6 +132,9 @@
 		{%- endif %}
 
 		{%- for link in web_include_css %}
+			{% if link == "website_theme.css" %}
+				{% set link = "/theme/page/"+name|default("starter")+".css" %}
+			{% endif %}
 			<link type="text/css" rel="stylesheet" href="{{ link|abs_url }}">
 		{%- endfor -%}
 
@@ -150,14 +166,16 @@
 	{% endblock %}
 	<!-- Navigation -->
 	{% block navbar scoped %}
-		{% include "templates/includes/navbar/navbar.html" %}
+		{% include "templates/includes/navbar/navbar"+theme_navbar_type_ref[theme_navbar_type]+".html" %}
 	{% endblock %}
 
 	{% block navbar_under scoped %}
-	<div class="navbar-under {{ theme_navbar_under_flow }} {% if slideshow and slides|length > 0 %}has-slides{% endif %}">
-		{% if theme_slider_placement == 'navbar_under' %}
-			{% include "templates/includes/slideshow.html" %}
-		{% endif %}
+	<div class="navbar-under-container">
+		<div class="navbar-under {{ theme_navbar_under_flow }} {% if slideshow and slides|length > 0 %}has-slides{% endif %}">
+			{% if theme_slider_placement == 'navbar_under' %}
+				{% include "templates/includes/slideshow.html" %}
+			{% endif %}
+		</div>
 	</div>
 	{% endblock %}
 
@@ -209,6 +227,7 @@
 
 	{%- block script %}{%- endblock %}
         <script>
+		/* Nav shrink behaviour */
 		$(window).scroll(function() {
 		  if ($(document).scrollTop() > 50) {
 		    $('nav').addClass('shrink');
@@ -216,6 +235,40 @@
 		    $('nav').removeClass('shrink');
 		  }
 		});
+
+		/* Slider animation handling */
+		function doAnimations(el) {
+			el.each(function() {
+				var $this = $(this);
+				$.each($this.attr('class').toString().split(' '), function(k, v) {
+					if ( v.substring(0, 9) == "animated-" ) {
+						var cls = "animated " + v.substring(9);
+						$this.addClass(cls).one("webkitAnimationEnd animationend", 
+							function() {
+								$this.removeClass(cls)
+							});
+					}
+				});
+			});
+
+		}
+
+
+		$('#the-carousel').on('slide.bs.carousel', function(e) {
+			var $el = $(e.relatedTarget).find('*[class*="animated-"]');
+			doAnimations($el);
+		});	
+
+		doAnimations($('.carousel-inner .item:first *[class*="animated-"]'));
+
+		{% if theme_navbar_open_on_hover %}
+		/* menu hover behaviour */
+		$('ul.nav li.dropdown').hover(function() {
+		  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+		}, function() {
+		  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+		});
+		{% endif %}
 	</script>
 
 	<!-- csrf_token -->

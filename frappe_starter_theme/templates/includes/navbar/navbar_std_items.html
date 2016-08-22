@@ -1,0 +1,13 @@
+{% if top_bar_items -%}
+<ul class="nav navbar-nav navbar-left {{ theme_navbar_location }}">
+	{%- for page in top_bar_items -%}
+		{% include "templates/includes/navbar/navbar_link.html" %}
+	{%- endfor %}
+</ul>
+{%- endif %}
+<ul class="nav navbar-nav navbar-right">
+        {% if not only_static %}
+                {% block navbar_right_extension %}{% endblock %}
+        {% endif %}
+        {% include "templates/includes/navbar/navbar_login.html" %}
+</ul>

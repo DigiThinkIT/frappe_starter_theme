@@ -7,6 +7,7 @@
 	height: 75px;
 	-webkit-transition: all 0.4s ease;
 	transition: all 0.4s ease;
+	z-index: 100000;
 }
 
 .navbar.shrink {
@@ -17,6 +18,7 @@
 .navbar .container, .navbar .container-flow {
 	position: relative;
 	height: 100%;
+	padding: 0 15px;
 }
 
 .navbar .float {
@@ -24,6 +26,19 @@
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
+}
+
+.navbar-toggle i {
+	color: {{ theme.top_bar_text_color }};
+}
+.navbar.shrink .navbar-toggle i {
+	color: {{ theme.get('top_bar_text_color_shrink', theme.top_bar_text_color) }};
+}
+.navbar-toggle {
+	border-color: {{ theme.top_bar_text_color }};
+}
+.navbar.shrink .navbar-toggle {
+	border-color: {{ theme.get('top_bar_text_color_shrink', theme.top_bar_text_color) }};
 }
 
 .navbar .navbar-text,
@@ -90,6 +105,12 @@
 	min-height: 20px;
 	height: auto;
 }
+.navbar > .container .navbar-brand {
+	margin-left: 0px;
+}
+nav.navbar.navbar-inlined-brand > .container .inlined-brand .navbar-brand {
+	margin-left: 0px;
+}
 
 @media (max-width: 767px) {
 	.navbar .toggle-sidebar {
@@ -113,7 +134,7 @@
 }
 
 .nav .dropdown-menu > li > a {
-	padding: 14px;
+	padding: {{ theme_navbar_dropdown_item_padding | default('14px') }};
 }
 
 .nav .dropdown-menu {
@@ -127,4 +148,58 @@
 
 .nav .dropdown-menu .divider {
 	margin: 0px;
+}
+
+.nav .dropdown-menu {
+	background-color: {{ theme_navbar_dropdown_color | default('#fff') }};
+	{% if theme_navbar_dropdown_border | default(false) %}
+		border: {{ theme_navbar_dropdown_border }};
+	{% endif %}
+}
+
+.nav .dropdown-menu > li > a {
+	color: {{ theme_navbar_dropdown_text_color | default('#333') }};
+	background-color: {{ theme_navbar_dropdown_color_hover | default('#f0f4f7') }};
+}
+
+.nav .dropdown-menu > li > a:hover {
+	color: {{ theme_navbar_dropdown_text_color_hover | default('#333') }};
+}
+
+.navbar-left.navbar-loc-left {
+}
+.navbar-left.navbar-loc-center {
+	float: none !important;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+.navbar-left.navbar-loc-right {
+	float: none !important;
+	display: inline-block
+}
+
+.navbar .navbar-item-container.navbar-loc-right {
+	float: right;
+}
+.navbar .navbar-item-container.navbar-loc-right .navbar-right {
+	float: inherit !important;
+}
+.navbar-nav > li {
+}
+
+.navbar-toggle {
+	padding: .4em .8em;
+}
+
+.navbar-item-container {
+	margin-right: 30px;
+}
+
+.navbar-right {
+	margin-right: 0px;
+}
+
+.navbar-type-std .navbar-right {
+	margin-right: 30px;
 }

@@ -4,6 +4,9 @@
 from __future__ import unicode_literals
 import re
 import frappe
+import json
+import urllib
+from datetime import datetime
 from frappe.website.utils import get_shade
 from frappe.website.doctype.website_theme.website_theme import get_active_theme
 
@@ -21,11 +24,49 @@ default_properties = {
 	"link_color": "#000000"
 }
 
+def json_default(obj):
+
+	if isinstance(obj, datetime):
+		return obj.isoformat()
+
+	if hasattr(obj, "__dict__"):
+		return str(obj) # copy.copy(obj.__dict__) #removed due to circular reference
+
+	raise TypeError("Unserializable object {} of type {}".format(obj, type(obj)))
+
+def log(msg):
+	with open("/tmp/theme.log", "a") as fh:
+		fh.write(str(msg))
+		fh.write("\n")
+		fh.flush()
+		fh.close()
+
+
 def get_context(context):
 	"""returns web style"""
 	website_theme = get_active_theme()
 	if not website_theme:
 		return {}
+
+	path_name = context.get("pathname", "")
+
+	if path_name[0:11] == "theme/page/":
+
+		page_name = path_name[11:-4]
+		if page_name and frappe.db.exists("Web Page", page_name):
+			page = frappe.get_doc("Web Page", page_name)
+
+			if page and page.get("theme_override", None):
+				if frappe.db.exists("Website Theme", page.get("theme_override")):
+					override_theme = frappe.get_doc("Website Theme", page.get("theme_override"))
+					if page.theme_override_mode == "Inherit":
+						ignore_keys = ["owner", "modified_by", "creation", "docstatus", "modified"]
+						for key in override_theme.as_dict().keys():
+							if key not in ignore_keys:
+								website_theme.set(key, override_theme.get(key))
+
+					elif page.theme_override_mode == "Full":
+						website_theme = override_theme
 
 	prepare(website_theme)
 
@@ -52,3 +93,4 @@ def prepare(theme):
 			theme.webfont_import += "\n" + "\n".join(webfont_import)
 			for wfimport in webfont_import:
 				theme.css = theme.css.replace(wfimport, "")
+

@@ -1,0 +1,5 @@
+
+.navbar-under-container {
+	background-color: {{ theme_navbar_under_color | default("transparent") }}
+}
+

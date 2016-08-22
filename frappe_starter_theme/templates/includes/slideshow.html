@@ -41,7 +41,7 @@
 
 <script>
 frappe.ready(function() {
-	$(".carousel").carousel();
+	$(".carousel").carousel({interval: {{ slideshow_delay_interval }}});
 });
 </script>
 {% endif %}

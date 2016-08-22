@@ -26,8 +26,13 @@ fixtures = ["Custom Field"]
 # web_include_css = "/assets/frappe_starter_theme/css/frappe_starter_theme.css"
 # web_include_js = "/assets/frappe_starter_theme/js/frappe_starter_theme.js"
 
-web_include_css = "/starter_theme.css"
+web_include_css = "/assets/frappe_starter_theme/css/animate.css"
 update_website_context = "frappe_starter_theme.starter.get_starter_theme_context"
+
+website_route_rules = [
+	{"from_route": "/website_theme.css", "to_route": "starter_theme.css"},
+	{"from_route": "/theme/page/<page_name>.css", "to_route": "starter_theme.css"}
+]
 # Home Pages
 # ----------
 

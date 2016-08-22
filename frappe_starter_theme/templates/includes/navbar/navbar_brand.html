@@ -1,0 +1,3 @@
+<a class="navbar-brand" href="{{ url_prefix }}{{ home_page or "/"}}">
+	<span>{{ brand_html or (frappe.get_hooks("brand_html") or ["Home"])[0] }}</span>
+</a>

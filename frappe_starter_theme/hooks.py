@@ -12,7 +12,7 @@ app_email = "forellana@digithinkit.com"
 app_license = "MIT"
 
 
-fixtures = ["Custom Field"]
+#fixtures = ["Custom Field"]
 
 # Includes in <head>
 # ------------------
@@ -26,6 +26,7 @@ fixtures = ["Custom Field"]
 # web_include_css = "/assets/frappe_starter_theme/css/frappe_starter_theme.css"
 # web_include_js = "/assets/frappe_starter_theme/js/frappe_starter_theme.js"
 
+web_include_js = "/assets/frappe_starter_theme/js/jquery.waypoints.min.js"
 web_include_css = "/assets/frappe_starter_theme/css/animate.css"
 update_website_context = "frappe_starter_theme.starter.get_starter_theme_context"
 

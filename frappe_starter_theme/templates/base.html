@@ -68,7 +68,7 @@
 	{% set theme_auto_sidebar_placement = theme_auto_sidebar_placement | default(true) %}
 	{% set theme_navbar_fixed_top = theme_navbar_fixed_top | default(false) %}
 	{% set theme_navbar_inlined = theme_navbar_inlined | default(false) %}
-	{% set theme_navbar_type = theme_navbar_type | default("Frappe") %}
+	{% set theme_navbar_type = theme_navbar_type if theme_navbar_type != None else "Frappe" %}
 	{% set theme_navbar_location = theme_navbar_location | default("navbar-loc-left") %}
 
 	{% set theme_navbar_open_on_hover = theme_navbar_open_on_hover | default(1) %}
@@ -166,7 +166,7 @@
 	{% endblock %}
 	<!-- Navigation -->
 	{% block navbar scoped %}
-		{% include "templates/includes/navbar/navbar"+theme_navbar_type_ref[theme_navbar_type]+".html" %}
+		{% include "templates/includes/navbar/navbar"+theme_navbar_type_ref[theme_navbar_type|default("Frappe")]+".html" %}
 	{% endblock %}
 
 	{% block navbar_under scoped %}

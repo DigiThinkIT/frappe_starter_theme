@@ -227,6 +227,17 @@
 
 	{%- block script %}{%- endblock %}
         <script>
+
+        $(function() {
+            /* Nice scrolling */
+            $("html").niceScroll({
+                scrollspeed: {{ theme_scroll_speed | default(60) }},
+                mousescrollstep: {{ theme_mouse_scroll_step | default(45) }},
+                hwacceleration: true,
+                bouncescroll: true
+            });
+        });
+
 		/* Nav shrink behaviour */
 		$(window).scroll(function() {
 		  if ($(document).scrollTop() > 50) {

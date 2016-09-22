@@ -27,8 +27,8 @@ app_license = "MIT"
 # web_include_js = "/assets/frappe_starter_theme/js/frappe_starter_theme.js"
 
 web_include_js = [
-    "/assets/frappe_starter_theme/js/jquery.waypoints.min.js",
-    "/assets/frappe_starter_theme/js/jquery.nicescroll.min.js"
+    "/assets/frappe_starter_theme/js/jquery.nicescroll.min.js",
+    "/assets/frappe_starter_theme/js/jquery.waypoints.min.js"
 ]
 web_include_css = "/assets/frappe_starter_theme/css/animate.css"
 update_website_context = "frappe_starter_theme.starter.get_starter_theme_context"

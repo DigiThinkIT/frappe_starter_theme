@@ -23,7 +23,7 @@
 			{% if slide.heading or slide.description %}
 			<div class="carousel-caption">
 				{% if slide.heading %}<h4>{{ slide.heading }}</h4>{% endif %}
-				{% if slide.description %}<p>{{ slide.description }}</p>{% endif %}
+                {% if slide.description %}<div>{{ slide.description }}</div>{% endif %}
 			</div>
 			{% endif %}
 		</div>

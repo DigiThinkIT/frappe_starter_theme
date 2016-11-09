@@ -6,8 +6,7 @@
 	<!-- Indicators -->
 	<ol class="carousel-indicators">
 		{% for slide in slides %}
-			<li data-target="#the-carousel" data-slide-to="{{ slide.idx - 1 }}"
-				{%- if slide.idx==1 %}class="active"{% endif %}></li>
+			<li data-target="#the-carousel" data-slide-to="{{ slide.idx - 1 }}" {%- if slide.idx==1 %} class="active"{% endif %}></li>
 		{% endfor %}
 	</ol>
 
@@ -23,7 +22,7 @@
 			{% if slide.heading or slide.description %}
 			<div class="carousel-caption">
 				{% if slide.heading %}<h4>{{ slide.heading }}</h4>{% endif %}
-                {% if slide.description %}<div>{{ slide.description }}</div>{% endif %}
+                {% if slide.description %}<div class="carousel-description">{{ slide.description }}</div>{% endif %}
 			</div>
 			{% endif %}
 		</div>

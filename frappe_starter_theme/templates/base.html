@@ -164,9 +164,12 @@
 			<header><div class="{{ theme_banner_flow }}">{{ banner_html or "" }}</div></header>
 		{%- endif %}
 	{% endblock %}
-	<!-- Navigation -->
+	<!-- Navigation {{ theme_navbar_type_ref[theme_navbar_type|default("Frappe")] }}-->
 	{% block navbar scoped %}
-		{% include "templates/includes/navbar/navbar"+theme_navbar_type_ref[theme_navbar_type|default("Frappe")]+".html" %}
+		{% with theme_navbar_inlined=theme_navbar_inlined %}
+			<!-- navbar{{ theme_navbar_type_ref[theme_navbar_type|default("Frappe")] }} -->
+			{% include "templates/includes/navbar/navbar"+theme_navbar_type_ref[theme_navbar_type|default("Frappe")]+".html" %}
+		{% endwith %}
 	{% endblock %}
 
 	{% block navbar_under scoped %}
@@ -230,12 +233,14 @@
 
         $(function() {
             /* Nice scrolling */
+	    /*
             $("html").niceScroll({
                 scrollspeed: {{ theme_scroll_speed | default(60) }},
                 mousescrollstep: {{ theme_mouse_scroll_step | default(45) }},
                 hwacceleration: true,
                 bouncescroll: true
             });
+            */
         });
 
 		/* Nav shrink behaviour */

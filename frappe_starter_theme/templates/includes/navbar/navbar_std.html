@@ -2,6 +2,7 @@
 	<nav class="navbar navbar-type-std navbar-default navbar-main {{ theme_navbar_classes }}" role="navigation">
 		<div class="{{ theme_navbar_flow  }}">
 			<div class="float">
+				<!-- mobile navbar -->
 				<div class="navbar-header">
 					{% if theme_navbar_inlined %}
 					<span class="mobile-brand hidden-sm hidden-lg hidden-md hidden-lg visible-xs">
@@ -17,7 +18,8 @@
 						{% include "templates/includes/navbar/std_dropdown_items.html" %}
 					</div>
 				</div>
-				<div class="hidden-xs">
+				<!-- desktop navbar -->
+				<div class="hidden-xs{% if theme_navbar_inlined %} brand-inlined{% endif %}">
 					{% block navbar_items %}
 					{% if theme_navbar_inlined %}
 						{% include "templates/includes/navbar/navbar_std_items_with_brand.html" %}

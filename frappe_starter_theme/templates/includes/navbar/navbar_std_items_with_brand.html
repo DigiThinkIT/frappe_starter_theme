@@ -1,16 +1,18 @@
 {% if top_bar_items -%}
-<ul class="nav navbar-nav navbar-left {{ theme_navbar_location }}">
+<ul class="nav navbar-nav navbar-left navbar-inlined-brand {{ theme_navbar_location }}">
 	{# Calculate brand middle position when inlined #}
-	{% set idx=0 %}
+	{% set idx=[0] %}
 	{% set menu_mid = ((top_bar_items|length)/2)|round %}
 	{%- for page in top_bar_items -%}
-		{% if idx == menu_mid %}
+	{% if not page.parent_label and not page.right -%}
+		{% if idx[0] == menu_mid %}
 		<li class="hidden-xs inlined-brand">
 			{% include "templates/includes/navbar/navbar_brand.html" %}
 		<li>
 		{% endif %}
-		{% include "templates/includes/navbar/navbar_link.html" %}
-		{% set idx = idx + 1 %}
+	{% include "templates/includes/navbar/navbar_link.html" %}
+	{% if idx.append(idx.pop() + 1) %}{% endif %} {# increment idx hack #}
+	{%- endif -%}
 	{%- endfor %}
 </ul>
 {%- endif %}

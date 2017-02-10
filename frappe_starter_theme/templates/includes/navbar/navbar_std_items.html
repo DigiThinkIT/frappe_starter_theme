@@ -5,9 +5,4 @@
 	{%- endfor %}
 </ul>
 {%- endif %}
-<ul class="nav navbar-nav navbar-right">
-        {% if not only_static %}
-                {% block navbar_right_extension %}{% endblock %}
-        {% endif %}
-        {% include "templates/includes/navbar/navbar_login.html" %}
-</ul>
+{% include "templates/includes/navbar/navbar_right.html" %}

@@ -4,9 +4,7 @@
 {%- set heading_selectors = "h1, h2, h3, h4, h5, h6" -%}
 
 {{ theme.webfont_import or "" }}
-{%- endif -%}
-
-
+{%- endif %}
 
 html, body {
 	height: 100%;
@@ -64,7 +62,7 @@ footer.web-footer {
 	height:100vh;
 }
 .navbar-under.has-slides .slider-image {
-	width: 100%; 
+	width: 100%;
 	height:100vh;
 	background-position: center;
 	-moz-background-size: cover;
@@ -132,35 +130,35 @@ a:active {
 	}
 {%- endif %}
 
-h1 { 
-	font-size: {{ theme_h1_size | default('inherit') }}; 
-	background: {{ theme_h1_color | default('inherit') }}; 
-	color: {{ theme_h1_text_color | default('inherit') }}; 
+h1 {
+	font-size: {{ theme_h1_size | default('inherit') }};
+	background: {{ theme_h1_color | default('inherit') }};
+	color: {{ theme_h1_text_color | default('inherit') }};
 }
-h2 { 
-	font-size: {{ theme_h2_size | default('inherit') }}; 
-	background: {{ theme_h2_color | default('inherit') }}; 
-	color: {{ theme_h2_text_color | default('inherit') }}; 
+h2 {
+	font-size: {{ theme_h2_size | default('inherit') }};
+	background: {{ theme_h2_color | default('inherit') }};
+	color: {{ theme_h2_text_color | default('inherit') }};
 }
-h3 { 
-	font-size: {{ theme_h3_size | default('inherit') }}; 
-	background: {{ theme_h3_color | default('inherit') }}; 
-	color: {{ theme_h3_text_color | default('inherit') }}; 
+h3 {
+	font-size: {{ theme_h3_size | default('inherit') }};
+	background: {{ theme_h3_color | default('inherit') }};
+	color: {{ theme_h3_text_color | default('inherit') }};
 }
-h4 { 
-	font-size: {{ theme_h4_size | default('inherit') }}; 
-	background: {{ theme_h4_color | default('inherit') }}; 
-	color: {{ theme_h4_text_color | default('inherit') }}; 
+h4 {
+	font-size: {{ theme_h4_size | default('inherit') }};
+	background: {{ theme_h4_color | default('inherit') }};
+	color: {{ theme_h4_text_color | default('inherit') }};
 }
-h5 { 
-	font-size: {{ theme_h5_size | default('inherit') }}; 
-	background: {{ theme_h5_color | default('inherit') }}; 
-	color: {{ theme_h5_text_color | default('inherit') }}; 
+h5 {
+	font-size: {{ theme_h5_size | default('inherit') }};
+	background: {{ theme_h5_color | default('inherit') }};
+	color: {{ theme_h5_text_color | default('inherit') }};
 }
-h6 { 
-	font-size: {{ theme_h6_size | default('inherit') }}; 
-	background: {{ theme_h6_color | default('inherit') }}; 
-	color: {{ theme_h6_text_color | default('inherit') }}; 
+h6 {
+	font-size: {{ theme_h6_size | default('inherit') }};
+	background: {{ theme_h6_color | default('inherit') }};
+	color: {{ theme_h6_text_color | default('inherit') }};
 }
 
 {% endif %}

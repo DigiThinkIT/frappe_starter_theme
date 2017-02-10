@@ -1,6 +1,3 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
-# MIT License. See license.txt
-
 from __future__ import unicode_literals
 import re
 import frappe
@@ -35,12 +32,7 @@ def json_default(obj):
 	raise TypeError("Unserializable object {} of type {}".format(obj, type(obj)))
 
 def log(msg):
-	with open("/tmp/theme.log", "a") as fh:
-		fh.write(str(msg))
-		fh.write("\n")
-		fh.flush()
-		fh.close()
-
+	print(str(msg))
 
 def get_context(context):
 	"""returns web style"""
@@ -93,4 +85,3 @@ def prepare(theme):
 			theme.webfont_import += "\n" + "\n".join(webfont_import)
 			for wfimport in webfont_import:
 				theme.css = theme.css.replace(wfimport, "")
-

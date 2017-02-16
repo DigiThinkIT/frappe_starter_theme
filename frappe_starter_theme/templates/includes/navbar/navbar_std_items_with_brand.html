@@ -2,7 +2,7 @@
 <ul class="nav navbar-nav navbar-left navbar-inlined-brand {{ theme_navbar_location }}">
 	{# Calculate brand middle position when inlined #}
 	{% set idx=[0] %}
-	{% set menu_mid = ((top_bar_items|length)/2)|round %}
+	{% set menu_mid = (((top_bar_items|length) - (top_bar_items|selectattr('right', 'equalto', 1)|map(attribute='right')|list|length)) / 2)|round %}
 	{%- for page in top_bar_items -%}
 	{% if not page.parent_label and not page.right -%}
 		{% if idx[0] == menu_mid %}

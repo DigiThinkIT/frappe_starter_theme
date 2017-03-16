@@ -166,10 +166,8 @@
 	{% endblock %}
 	<!-- Navigation {{ theme_navbar_type_ref[theme_navbar_type|default("Frappe")] }}-->
 	{% block navbar scoped %}
-		{% with theme_navbar_inlined=theme_navbar_inlined %}
 			<!-- navbar{{ theme_navbar_type_ref[theme_navbar_type|default("Frappe")] }} -->
-			{% include "templates/includes/navbar/navbar"+theme_navbar_type_ref[theme_navbar_type|default("Frappe")]+".html" %}
-		{% endwith %}
+			{% include "templates/includes/navbar/navbar"+theme_navbar_type_ref[theme_navbar_type|default("Frappe")]+".html" with context %}
 	{% endblock %}
 
 	{% block navbar_under scoped %}

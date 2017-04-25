@@ -1,18 +1,11 @@
 from __future__ import unicode_literals
 import frappe
+from frappe import _
 from frappe.model.document import Document
-from frappe.utils import cint, has_gravatar, format_datetime, now_datetime, get_formatted_email
-from frappe import throw, msgprint, _
-from frappe.utils.password import update_password as _update_password
-from frappe.desk.notifications import clear_notifications
-from frappe.utils.user import get_system_managers
-import frappe.permissions
-import frappe.share
-import re
-from frappe.limits import get_limits
+from frappe.utils.password import update_password
 
 @frappe.whitelist(allow_guest=True)
-def sign_up(email, full_name, pwd, redirect_to):
+def sign_up(email, full_name, pwd=None, redirect_to=None):
 	user = frappe.db.get("User", {"email": email})
 	if user:
 		if user.disabled:
@@ -32,15 +25,20 @@ def sign_up(email, full_name, pwd, redirect_to):
 			"email": email,
 			"first_name": full_name,
 			"enabled": 1,
-			"new_password": pwd,
-			"user_type": "Website User"
+			"user_type": "Website User",
+			"send_welcome_email": True
 		})
+
+		if pwd:
+			user.send_welcome_email = False
+		
 		user.flags.ignore_permissions = True
 		user.insert()
-
-		frappe.local.login_manager.login_as(email)
-		frappe.set_user(email)
-
+		
+		if pwd:
+			update_password(user.name, pwd)
+			frappe.local.login_manager.login_as(email)
+			frappe.set_user(email)
 
 		if redirect_to:
 			frappe.cache().hset('redirect_after_login', user.name, redirect_to)

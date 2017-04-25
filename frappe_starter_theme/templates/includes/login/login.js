@@ -35,14 +35,6 @@ login.bind_events = function() {
 		args.pwd = ($("#signup_password").val() || "").trim();
 		args.pwd_check = ($("#signup_password_check").val() || "").trim();
 
-		if (!args.pwd) {
-			frappe.msgprint(__("Password is required."))
-			return false;
-		} else if ( args.pwd != args.pwd_check ) {
-			frappe.msgprint(__("Passwords do not match!"))
-			return false;
-		}
-
 		if(!args.email || !valid_email(args.email) || !args.full_name) {
 			frappe.msgprint(__("Valid email and name required"));
 			return false;

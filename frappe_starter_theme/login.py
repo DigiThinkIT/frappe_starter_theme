@@ -12,7 +12,7 @@ import re
 from frappe.limits import get_limits
 
 @frappe.whitelist(allow_guest=True)
-def sign_up(email, full_name, pwd, redirect_to):
+def sign_up(email, full_name, pwd=None, redirect_to=None):
 	user = frappe.db.get("User", {"email": email})
 	if user:
 		if user.disabled:
@@ -32,15 +32,20 @@ def sign_up(email, full_name, pwd, redirect_to):
 			"email": email,
 			"first_name": full_name,
 			"enabled": 1,
-			"new_password": pwd,
-			"user_type": "Website User"
+			"user_type": "Website User",
+			"send_welcome_email": True
 		})
+
+		if pwd:
+			user.new_password = pwd
+			user.send_welcome_email = False
+		
 		user.flags.ignore_permissions = True
 		user.insert()
-
-		frappe.local.login_manager.login_as(email)
-		frappe.set_user(email)
-
+		
+		if pwd:
+			frappe.local.login_manager.login_as(email)
+			frappe.set_user(email)
 
 		if redirect_to:
 			frappe.cache().hset('redirect_after_login', user.name, redirect_to)

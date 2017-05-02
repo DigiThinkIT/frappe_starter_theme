@@ -17,7 +17,7 @@
 
 	All flow controls work the same way. They are driven with the bootstrap
 	container or container-flow classes to change width contraints
-	
+
 	Use one of the bootstrap container classes contraint or auto size on
 	any of the flow variables:
 
@@ -51,7 +51,7 @@
 
 	You can turn off the automatic placement of the sidebar by setting theme_auto_sidebar_placement
 	to false. You then must render the sidebar yourself by overriding the appropriate block.
-	
+
 	#}
 
 	{% set theme_push_footer_bottom = theme_push_footer_bottom | default(false) %}
@@ -73,10 +73,10 @@
 
 	{% set theme_navbar_open_on_hover = theme_navbar_open_on_hover | default(1) %}
 
-	{% set slideshow_delay_interval = slideshow_delay_interval | default(10000) %}
+	{% set slideshow_delay_interval = slideshow_delay_interval | default(5000) %}
 
 	{% set theme_navbar_type_ref = { "Frappe": "", "Standard": "_std" } %}
-	
+
 	{% set theme_navbar_classes = theme_navbar_classes | default("") %}
 
 	{% if theme_navbar_fixed_top %}
@@ -187,10 +187,10 @@
 					{%- block hero -%}{%- endblock -%}
 				</div>
 				<div class="{{ theme_page_flow }}" id="page-{{ name or route }}"
-					data-path="{{ pathname }}" 
+					data-path="{{ pathname }}"
 					data-html-block="content" {% if page_or_generator=="Generator" %}
 					data-doctype="{{ doctype }}"{% endif %}>
-					
+
 					{% block content %}{% endblock %}
 				</div>
 			</div>
@@ -257,7 +257,7 @@
 				$.each($this.attr('class').toString().split(' '), function(k, v) {
 					if ( v.substring(0, 9) == "animated-" ) {
 						var cls = "animated " + v.substring(9);
-						$this.addClass(cls).one("webkitAnimationEnd animationend", 
+						$this.addClass(cls).one("webkitAnimationEnd animationend",
 							function() {
 								$this.removeClass(cls)
 							});
@@ -271,7 +271,7 @@
 		$('#the-carousel').on('slide.bs.carousel', function(e) {
 			var $el = $(e.relatedTarget).find('*[class*="animated-"]');
 			doAnimations($el);
-		});	
+		});
 
 		doAnimations($('.carousel-inner .item:first *[class*="animated-"]'));
 

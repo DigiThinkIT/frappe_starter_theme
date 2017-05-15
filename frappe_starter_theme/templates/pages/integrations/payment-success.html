@@ -1,0 +1,28 @@
+{% extends "templates/web.html" %}
+
+{% block title %}
+	{{ _("Payment Success") }}
+{% endblock %}
+
+{%- block page_content -%}
+	<div class="container">
+		<h2>{{ _("Payment Success") }}</h2>
+		<p class="lead">{{ _("Your payment was successfully accepted!") }}</p>
+		<a href="{{ frappe.form_dict.redirect_to or '/' }}"
+		class="btn-continue">{{ frappe.form_dict.redirect_message or _("Continue") }}</a>
+	</div>
+
+	<style type="text/css">
+	.btn-continue {
+	    color: #ffffff;
+	    font-family: oswald;
+	    border-radius: .1em;
+	    background-color: #292929;
+	    font-size: 1.5em;
+	    border: none;
+	    padding: .3em 1em;
+	    vertical-align: text-bottom;
+	    margin: .3em 0;
+	}
+	</style>
+{% endblock %}

@@ -7,5 +7,4 @@ window.jscolor = {
 	color: function() {}
 }
 
-console.log("Did it work?");
 

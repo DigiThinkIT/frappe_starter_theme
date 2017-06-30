@@ -31,11 +31,12 @@ login.bind_events = function() {
 		args.cmd = "frappe_starter_theme.login.sign_up";
 		args.email = ($("#signup_email").val() || "").trim();
 		args.redirect_to = get_url_arg("redirect-to") || '';
-		args.full_name = ($("#signup_fullname").val() || "").trim();
+		args.first_name = ($("#signup_firstname").val() || "").trim();
+		args.last_name = ($("#signup_lastname").val() || "").trim();
 		args.pwd = ($("#signup_password").val() || "").trim();
 		args.pwd_check = ($("#signup_password_check").val() || "").trim();
 
-		if(!args.email || !valid_email(args.email) || !args.full_name) {
+		if(!args.email || !valid_email(args.email) || !args.first_name || !args.last_name) {
 			frappe.msgprint(__("Valid email and name required"));
 			return false;
 		}

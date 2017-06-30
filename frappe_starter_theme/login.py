@@ -5,7 +5,7 @@ from frappe.model.document import Document
 from frappe.utils.password import update_password
 
 @frappe.whitelist(allow_guest=True)
-def sign_up(email, full_name, pwd=None, redirect_to=None):
+def sign_up(email, first_name, last_name, pwd=None, redirect_to=None):
 	user = frappe.db.get("User", {"email": email})
 	if user:
 		if user.disabled:
@@ -23,7 +23,8 @@ def sign_up(email, full_name, pwd=None, redirect_to=None):
 		user = frappe.get_doc({
 			"doctype":"User",
 			"email": email,
-			"first_name": full_name,
+			"first_name": first_name,
+			"last_name": last_name,
 			"enabled": 1,
 			"user_type": "Website User",
 			"send_welcome_email": True

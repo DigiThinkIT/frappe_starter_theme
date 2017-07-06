@@ -43,8 +43,3 @@ def sign_up(email, first_name, last_name, pwd=None, redirect_to=None):
 
 		if redirect_to:
 			frappe.cache().hset('redirect_after_login', user.name, redirect_to)
-
-		if user.flags.email_sent:
-			return _("Please check your email for verification")
-		else:
-			return _("Please ask your administrator to verify your sign-up")

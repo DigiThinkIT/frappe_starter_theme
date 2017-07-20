@@ -26,6 +26,26 @@
             <div class="col-xs-4 text-right text-muted">{{ _("Name") }}</div>
             <div class="col-xs-8">{{ fullname }}</div>
         </div>
+        {% if total_unpaid %}
+        <div class="row">
+            <div class="col-xs-4 text-right text-muted">{{ _("Total Unpaid") }}</div>
+            <div class="col-xs-8">${{ total_unpaid }}</div>
+        </div>
+        {% endif %}
+        {% if credit_limit %}
+        <div class="row">
+            <div class="col-xs-4 text-right text-muted">{{ _("Credit Limit") }}</div>
+            <div class="col-xs-8">${{ credit_limit }}</div>
+        </div>
+        {% endif %}
+        {% if credit_days_based_on == "Fixed Days"%}
+        <div class="row">
+            <div class="col-xs-4 text-right text-muted">{{ _("Credit Days") }}</div>
+            <div class="col-xs-8">{{ credit_days }}</div>
+        </div>
+        {% endif %}
+
+        
     </div>
 </div>
 <div class="col-xs-12 visible-xs" style="min-height: 400px; padding: 10px 0 0 0">

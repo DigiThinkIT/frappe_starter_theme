@@ -31,6 +31,9 @@ def json_default(obj):
 
 	raise TypeError("Unserializable object {} of type {}".format(obj, type(obj)))
 
+def log(msg):
+	print(str(msg))
+
 def get_context(context):
 	"""returns web style"""
 	website_theme = get_active_theme()
@@ -59,9 +62,7 @@ def get_context(context):
 
 	prepare(website_theme)
 
-	context["theme"] = website_theme
-
-	return context
+	return { "theme": website_theme }
 
 def prepare(theme):
 	for d in default_properties:

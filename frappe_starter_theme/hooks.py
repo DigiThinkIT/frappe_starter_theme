@@ -35,7 +35,8 @@ update_website_context = "frappe_starter_theme.starter.get_starter_theme_context
 
 website_route_rules = [
 	{"from_route": "/website_theme.css", "to_route": "starter_theme.css"},
-	{"from_route": "/theme/page/<page_name>.css", "to_route": "starter_theme.css"}
+	{"from_route": "/theme/page/<page_name>.css", "to_route": "starter_theme.css"},
+	{"from_route": "/theme/page/<path>/<page_name>.css", "to_route": "starter_theme.css"}
 ]
 # Home Pages
 # ----------
@@ -125,4 +126,3 @@ website_route_rules = [
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "frappe_starter_theme.event.get_events"
 # }
-

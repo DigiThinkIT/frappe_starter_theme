@@ -1,3 +1,4 @@
+{% import "templates/includes/blog/embed_macros.html" as blog %}
 <!DOCTYPE html>
 <!-- Built by DigiThinkIT, Inc. https://digithinkit.com/ for Frappe https://frappe.io/ -->
 <html lang="en">
@@ -70,8 +71,9 @@
 	{% set theme_navbar_inlined = theme_navbar_inlined | default(false) %}
 	{% set theme_navbar_type = theme_navbar_type if theme_navbar_type != None else "Frappe" %}
 	{% set theme_navbar_location = theme_navbar_location | default("navbar-loc-left") %}
-
 	{% set theme_navbar_open_on_hover = theme_navbar_open_on_hover | default(1) %}
+
+	{% set theme_display_blog = theme_display_blog | default(0) %}
 
 	{% set slideshow_delay_interval = slideshow_delay_interval | default(5000) %}
 
@@ -144,14 +146,10 @@
 	{%- endblock -%}
 
 	<script>
-		window.frappe = {
-		page_ready_events: {},
-			ready: function(fn) {
-				if (!frappe.page_ready_events[location.pathname]) {
-					frappe.page_ready_events[location.pathname] = []
-				}
-				frappe.page_ready_events[location.pathname].push(fn);
-			}
+		window.frappe = {};
+		frappe.ready_events = [];
+		frappe.ready = function(fn) {
+			frappe.ready_events.push(fn);
 		}
 		window.dev_server = {{ dev_server }};
 	</script>
@@ -191,7 +189,16 @@
 					data-html-block="content" {% if page_or_generator=="Generator" %}
 					data-doctype="{{ doctype }}"{% endif %}>
 
+					{% if theme_display_blog == "Before Content" %}
+						{{ blog.embed(blog_posts, blog_title) }}
+					{% endif %}
+
 					{% block content %}{% endblock %}
+
+					{% if theme_display_blog == "After Content" %}
+						{{ blog.embed(blog_posts, blog_title) }}
+					{% endif %}
+
 				</div>
 			</div>
 			{%- if footer is defined -%}

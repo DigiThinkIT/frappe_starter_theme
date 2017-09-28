@@ -1,0 +1,82 @@
+{% macro embed(blog_list, blog_title) -%}
+{% if blog_list|length > 0 %}
+
+<style>
+#blog-list {
+	overflow: auto;
+}
+
+#blog-list .results {
+	overflow: auto;
+}
+#blog-list .web-list-item {
+	border-bottom: none;
+}
+
+.blog-list-content {
+	border: 0px;
+	background: transparent;
+}
+.blog-list-item {
+	margin-top: 30px;
+	margin-bottom: 30px;
+	width: 50%;
+	float: left;
+}
+#blog-list .blog-list-item.featured {
+	width: 100%;
+	float: none;
+	clear: both;
+	border-bottom: 1px solid gray;
+}
+.blog-list-item.featured .blog-actions {
+	text-align: center;
+}
+.blog-list-item .blog-cover-image-container {
+	height: 20em;
+	overflow: hidden;
+	position: relative;
+}
+.blog-list-item .blog-cover-image {
+	width: 100%;
+	position: relative;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+.blog-list-item .blog-header {
+	font-size: 1.6em;
+}
+.post-description {
+	padding-bottom: 8px;
+}
+.post-description p {
+	margin-bottom: 8px;
+}
+.blog-title {
+	text-align: center;
+}
+#blog-list {
+	max-width: 1024px;
+	margin: auto;
+}
+
+@media only screen and (max-width: 600px) {
+	.blog-list-item {
+		width: 100%;
+		float: none;
+		clear: both;
+		border-bottom: 1px solid gray;
+	}
+}
+</style>
+<div id="blog-list">
+	<h2 class="blog-title">{{ blog_title }}</h2>
+	<div class=".results">
+{% for doc in blog_list %}
+{% include "templates/includes/blog/blog_post_row.html" %}
+{% endfor %}
+	</div>
+</div>
+{% endif %}
+{%- endmacro %}

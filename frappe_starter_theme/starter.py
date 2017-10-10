@@ -8,6 +8,9 @@ from frappe.website.doctype.website_theme.website_theme import get_active_theme
 from dti_devtools.debug import pretty_json
 
 def get_starter_theme_context(context):
+	if not hasattr(frappe.local, "request"):
+		return
+
 	path_name = frappe.local.request.path
 	page = None
 

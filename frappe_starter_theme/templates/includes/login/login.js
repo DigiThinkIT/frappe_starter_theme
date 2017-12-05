@@ -28,7 +28,7 @@ login.bind_events = function() {
 	$(".form-signup").on("submit", function(event) {
 		event.preventDefault();
 		var args = {};
-		args.cmd = "frappe_starter_theme.login.sign_up";
+		args.cmd = "widgets_collection.login.sign_up";
 		args.email = ($("#signup_email").val() || "").trim();
 		args.redirect_to = get_url_arg("redirect-to") || '';
 		args.first_name = ($("#signup_firstname").val() || "").trim();

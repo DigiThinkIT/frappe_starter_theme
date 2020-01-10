@@ -39,7 +39,7 @@ def get_api_key():
 def make_payment(razorpay_payment_id, options, reference_doctype, reference_docname):
 	data = {}
 
-	if isinstance(options, basestring):
+	if isinstance(options, str):
 		data = json.loads(options)
 
 	data.update({
